@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.value = '';
                 modalTitle.textContent = "Choisir un Bateau";
                 searchInput.style.display = 'none';
+                if (filterFolder) filterFolder.style.display = 'none';
                 renderModalCharacters();
                 modal.style.display = 'block';
             };
@@ -185,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-id');
     const removeBtn = document.getElementById('btn-remove-char');
     const cancelBtn = document.getElementById('btn-cancel-modal');
+    const filterFolder = document.querySelector('.filter-folder');
 
     // --- GESTION MODALE CONFIRMATION VIDER ---
     let teamToClear = null;
@@ -784,6 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             modalTitle.textContent = "Choisir un Personnage";
             searchInput.style.display = 'block';
+            if (filterFolder) filterFolder.style.display = 'block';
             renderModalCharacters(); // Afficher les persos
             modal.style.display = 'block';
         });

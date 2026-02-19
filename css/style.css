@@ -1,0 +1,546 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212; /* Fond sombre */
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1 {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    margin: 0 0 30px 0;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    border-bottom: 1px solid #333;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2, h3 {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 0;
+}
+
+.header-logo {
+    height: 48px;
+    margin-right: 15px;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Contrôles (Boutons) */
+.controls {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.toggle-btn {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.toggle-btn:hover { background-color: #444; }
+.toggle-btn.active { background-color: #f1c40f; color: #000; border-color: #f1c40f; font-weight: bold; }
+
+#team-builder {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+    gap: 25px;
+}
+
+.team-container {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+    transition: transform 0.2s;
+    width: 350px; /* Largeur fixe pour un alignement propre */
+    position: relative; /* Pour positionner le bouton clear */
+    text-align: center;
+}
+
+.team-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+/* --- Logique d'affichage (Boss vs Super Boss) --- */
+
+/* Si on est en mode "view-boss", on cache les super boss */
+#team-builder.view-boss .super-boss { display: none; }
+
+/* Si on est en mode "view-super", on cache les boss normaux */
+#team-builder.view-super .team-container:not(.super-boss) { display: none; }
+
+/* Couleurs spécifiques pour les Boss (STR/DEX/QCK/PSY/INT) */
+.team-container.type-STR h3 { color: #ff5252; border-bottom: 2px solid #ff5252; }
+.team-container.type-DEX h3 { color: #69f0ae; border-bottom: 2px solid #69f0ae; }
+.team-container.type-QCK h3 { color: #448aff; border-bottom: 2px solid #448aff; }
+.team-container.type-PSY h3 { color: #fdd835; border-bottom: 2px solid #fdd835; }
+.team-container.type-INT h3 { color: #ea80fc; border-bottom: 2px solid #ea80fc; }
+
+/* Style spécifique pour les Super Boss */
+.team-container.super-boss {
+    border: 2px solid #f1c40f;
+    box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+}
+
+.team-container h3 {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 5px;
+    cursor: pointer; /* Indique que c'est cliquable */
+}
+
+.boss-title-clickable:hover {
+    opacity: 0.8;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Bouton Vider l'équipe */
+.clear-team-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #c62828;
+    color: #fff;
+    border: none;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    font-weight: bold;
+}
+
+.clear-team-btn:hover {
+    opacity: 1;
+}
+
+/* Slot Bateau */
+.ship-slot {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #252525;
+    border: 2px dashed #555;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: border-color 0.2s;
+}
+
+.ship-slot:hover {
+    border-color: #f1c40f;
+}
+
+.ship-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Grille des personnages */
+.character-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.character-grid img {
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    object-fit: cover;
+    background-color: #2c2c2c;
+}
+
+.character-grid img:hover {
+    transform: scale(1.1);
+    border-color: #f1c40f;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+}
+
+.boss-stats-table .character-grid img:hover {
+    transform: none;
+    border-color: #333;
+    box-shadow: none;
+}
+
+/* Disposition des slots d'équipe : 2 colonnes, 3 lignes */
+.team-slots {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Style des slots d'équipe */
+.team-slot {
+    width: 64px;
+    height: 64px;
+    background-color: #252525;
+    border: 2px dashed #555;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.team-slot:hover {
+    border-color: #888;
+    background-color: #333;
+}
+
+/* Style lors du survol d'un drag & drop */
+.team-slot.drag-over {
+    border-color: #f1c40f;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+.team-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+/* Quand un slot est rempli */
+.team-slot.filled {
+    border-style: solid;
+    border-color: #f1c40f;
+    background-color: transparent;
+}
+
+.team-slot.filled img {
+    opacity: 1;
+}
+
+/* Classe pour montrer quel personnage est sélectionné (si utilisé) */
+.character-grid img.selected {
+    border-color: #e74c3c;
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+    transform: scale(1.1);
+}
+
+/* Styles de la fenêtre modale */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    margin: 5% auto;
+    padding: 25px;
+    border: 1px solid #444;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    color: #fff;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+/* --- Filtres dans la modale (Style Dossier) --- */
+.filter-folder {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.folder-tab {
+    background-color: #252525;
+    color: #f1c40f;
+    padding: 8px 20px;
+    display: inline-block;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+    border: 1px solid #555;
+    border-bottom: 1px solid #252525; /* Masque la bordure du bas pour connecter au contenu */
+    position: relative;
+    top: 1px;
+    z-index: 2;
+    margin-left: 10px;
+    cursor: default;
+    font-size: 14px;
+}
+
+.reset-filters-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+    transition: color 0.2s, transform 0.3s;
+    display: inline-block;
+}
+
+.reset-filters-btn:hover {
+    color: #fff;
+    transform: rotate(180deg);
+}
+
+.folder-content {
+    background-color: #252525;
+    border: 1px solid #555;
+    border-radius: 0 8px 8px 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.filter-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.filter-label {
+    font-weight: bold;
+    color: #aaa;
+    min-width: 60px;
+    text-align: right;
+    padding-top: 6px;
+    font-size: 14px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+}
+
+.filter-btn {
+    background-color: #383838;
+    border: 1px solid #555;
+    color: #ccc;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #3e3e3e;
+    border-color: #888;
+}
+
+.filter-btn.active {
+    background-color: #f1c40f;
+    color: #121212 !important; /* Force text color black on active */
+    border-color: #f1c40f !important;
+    font-weight: bold;
+}
+
+/* Couleurs spécifiques pour les boutons de Type quand ils sont actifs */
+.type-btn[data-value="STR"].active { background-color: #ff5252; border-color: #ff5252 !important; color: #000 !important; }
+.type-btn[data-value="DEX"].active { background-color: #69f0ae; border-color: #69f0ae !important; color: #000 !important; }
+.type-btn[data-value="QCK"].active { background-color: #448aff; border-color: #448aff !important; color: #fff !important; }
+.type-btn[data-value="PSY"].active { background-color: #fdd835; border-color: #fdd835 !important; color: #000 !important; }
+.type-btn[data-value="INT"].active { background-color: #ea80fc; border-color: #ea80fc !important; color: #000 !important; }
+
+.filter-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+#search-id {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+#search-id:focus {
+    outline: none;
+    border-color: #f1c40f;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+
+.remove-btn {
+    background-color: #c62828;
+}
+.remove-btn:hover { background-color: #b71c1c; }
+
+.cancel-btn {
+    background-color: #616161;
+}
+.cancel-btn:hover { background-color: #424242; }
+
+/* Scrollbar customisation */
+
+/* Styles pour la table d'infos du boss */
+.boss-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.boss-stats-table th, .boss-stats-table td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.boss-stats-table th {
+    background-color: #2c2c2c;
+    width: 30%;
+    font-weight: bold;
+    color: #f1c40f;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #121212; 
+}
+::-webkit-scrollbar-thumb {
+    background: #444; 
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+    main {
+        padding: 10px;
+    }
+    
+    #team-builder {
+        /* Flexbox gère déjà le responsive avec flex-wrap, mais on peut forcer la largeur */
+    }
+    
+    .team-container {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    .character-grid img, .team-slot {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Style pour les icônes dans le texte des boss */
+.inline-icon {
+    height: 1.3em; /* S'adapte à la taille du texte */
+    width: auto;
+    vertical-align: middle; /* Aligne l'image avec le texte */
+    margin-right: 4px;
+    margin-bottom: 2px;
+}
+
+/* Couleurs pour le titre de la modale d'info du boss */
+#boss-info-title.type-STR { color: #ff5252; }
+#boss-info-title.type-DEX { color: #69f0ae; }
+#boss-info-title.type-QCK { color: #448aff; }
+#boss-info-title.type-PSY { color: #fdd835; }
+#boss-info-title.type-INT { color: #ea80fc; }
+
+/* Ajustement pour l'icône dans le titre h2 de la modale */
+#boss-info-title .inline-icon {
+    height: 1.1em;
+}
+
+/* Responsive pour les filtres */
+@media (max-width: 600px) {
+    .filter-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .filter-label {
+        text-align: left;
+        min-width: auto;
+    }
+}

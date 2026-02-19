@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPTC Kizuna Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="Icons/ui/icon.png" type="image/png">
+</head>
+<body>
+
+    <h1><img src="Icons/ui/units.png" alt="Logo" class="header-logo"> OPTC Kizuna Planner</h1>
+
+    <main>
+        <div class="controls">
+            <button id="btn-boss" class="toggle-btn active">Boss Normaux</button>
+            <button id="btn-super" class="toggle-btn">Super Boss</button>
+        </div>
+
+        <section id="team-builder">
+            <div class="team-container">
+                <h3>Boss 1 (STR)</h3>
+                <div class="team-slots character-grid" data-boss="1">
+                    <div class="team-slot" data-slot="1"></div>
+                    <div class="team-slot" data-slot="2"></div>
+                    <div class="team-slot" data-slot="3"></div>
+                    <div class="team-slot" data-slot="4"></div>
+                    <div class="team-slot" data-slot="5"></div>
+                    <div class="team-slot" data-slot="6"></div>
+                </div>
+            </div>
+
+            <div class="team-container">
+                <h3>Boss 2 (DEX)</h3>
+                <div class="team-slots character-grid" data-boss="2">
+                    <div class="team-slot" data-slot="1"></div>
+                    <div class="team-slot" data-slot="2"></div>
+                    <div class="team-slot" data-slot="3"></div>
+                    <div class="team-slot" data-slot="4"></div>
+                    <div class="team-slot" data-slot="5"></div>
+                    <div class="team-slot" data-slot="6"></div>
+                </div>
+            </div>
+
+            <div class="team-container">
+                <h3>Boss 3 (QCK)</h3>
+                <div class="team-slots character-grid" data-boss="3">
+                    <div class="team-slot" data-slot="1"></div>
+                    <div class="team-slot" data-slot="2"></div>
+                    <div class="team-slot" data-slot="3"></div>
+                    <div class="team-slot" data-slot="4"></div>
+                    <div class="team-slot" data-slot="5"></div>
+                    <div class="team-slot" data-slot="6"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de sélection de personnage -->
+    <div id="character-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Choisir un personnage</h2>
+            <div class="modal-actions">
+                <button id="btn-remove-char" class="action-btn remove-btn">Retirer</button>
+                <button id="btn-cancel-modal" class="action-btn cancel-btn">Annuler</button>
+            </div>
+            
+            <!-- Filtres (Style Dossier) -->
+            <div class="filter-folder">
+                <div class="folder-tab">Filtres <span id="btn-reset-filters" class="reset-filters-btn" title="Réinitialiser les filtres">&#x21bb;</span></div>
+                <div class="folder-content">
+                    <div class="filter-row">
+                        <span class="filter-label">Type :</span>
+                        <div class="filter-group">
+                            <button class="filter-btn type-btn" data-filter-type="type" data-value="STR" style="color: #ff5252; border-color: #ff5252;">STR</button>
+                            <button class="filter-btn type-btn" data-filter-type="type" data-value="DEX" style="color: #69f0ae; border-color: #69f0ae;">DEX</button>
+                            <button class="filter-btn type-btn" data-filter-type="type" data-value="QCK" style="color: #448aff; border-color: #448aff;">QCK</button>
+                            <button class="filter-btn type-btn" data-filter-type="type" data-value="PSY" style="color: #fdd835; border-color: #fdd835;">PSY</button>
+                            <button class="filter-btn type-btn" data-filter-type="type" data-value="INT" style="color: #ea80fc; border-color: #ea80fc;">INT</button>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <span class="filter-label">Classe :</span>
+                        <div class="filter-group">
+                            <button class="filter-btn" data-filter-type="class" data-value="Fighter" title="Cogneur"><img src="Icons/Classes/Fighter.png" class="filter-icon"> Cogneur</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Slasher" title="Sabreur"><img src="Icons/Classes/Slasher.png" class="filter-icon"> Sabreur</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Striker" title="Ravageur"><img src="Icons/Classes/Striker.png" class="filter-icon"> Ravageur</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Shooter" title="Tireur"><img src="Icons/Classes/Shooter.png" class="filter-icon"> Tireur</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Free Spirit" title="Libre"><img src="Icons/Classes/FreeSpirit.png" class="filter-icon"> Libre</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Cerebral" title="Intellectuel"><img src="Icons/Classes/Cerebral.png" class="filter-icon"> Intellectuel</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Powerhouse" title="Tenace"><img src="Icons/Classes/Powerhouse.png" class="filter-icon"> Tenace</button>
+                            <button class="filter-btn" data-filter-type="class" data-value="Driven" title="Ambitieux"><img src="Icons/Classes/Driven.png" class="filter-icon"> Ambitieux</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="text" id="search-id" placeholder="Rechercher par Nom ou ID...">
+            <div id="modal-character-grid" class="character-grid"></div>
+        </div>
+    </div>
+
+    <!-- Modal d'informations du Boss -->
+    <div id="boss-info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-boss-info">&times;</span>
+            <h2 id="boss-info-title">Détails du Boss</h2>
+            <div id="boss-info-content"></div>
+        </div>
+    </div>
+
+    <script src="js/ship.js"></script>
+    <script src="js/boss_stats.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

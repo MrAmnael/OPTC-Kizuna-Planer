@@ -503,13 +503,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).filter(u => u !== null);
                     
                     // OPTIMISATION : On trie la liste une seule fois au chargement
+                    const excludedIds = new Set([
+                        5013, 5014, 5029, 5030, 5031, 5032, 
+                        5046, 5047, 5054, 5055, 5056
+                    ]);
+
                     allCharacters.sort((a, b) => {
                         const idA = parseInt(a.id);
                         const idB = parseInt(b.id);
 
-                        // Exception pour les IDs 4986 à 4996 (les mettre à la fin)
-                        const isAExcluded = idA >= 4986 && idA <= 4996;
-                        const isBExcluded = idB >= 4986 && idB <= 4996;
+                        // Exception pour les IDs 4986 à 4996 et la liste spécifique (les mettre à la fin)
+                        const isExcluded = (id) => (id >= 4986 && id <= 4996) || excludedIds.has(id);
+
+                        const isAExcluded = isExcluded(idA);
+                        const isBExcluded = isExcluded(idB);
 
                         if (isAExcluded && !isBExcluded) return 1;
                         if (!isAExcluded && isBExcluded) return -1;

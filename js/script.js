@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Types disponibles : 'STR', 'DEX', 'QCK', 'PSY', 'INT'
     const KIZUNA_CONFIG = [
         // Boss Normaux
-        { type: 'STR', label: 'Boss vs STR', active: true },
-        { type: 'DEX', label: 'Boss vs DEX', active: false },
-        { type: 'QCK', label: 'Boss vs QCK', active: false },
+        { type: 'STR', label: 'Boss vs STR', active: false },
+        { type: 'DEX', label: 'Boss vs DEX', active: true },
+        { type: 'QCK', label: 'Boss vs QCK', active: true },
         { type: 'PSY', label: 'Boss vs PSY', active: false },
-        { type: 'INT', label: 'Boss vs INT', active: true },
+        { type: 'INT', label: 'Boss vs INT', active: false },
         // Super Boss
         { type: 'STR', label: 'Super Boss vs STR', isSuper: true, active: false },
         { type: 'DEX', label: 'Super Boss vs DEX', isSuper: true, active: false },
@@ -279,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Resilience': 'Icons/effects/Resilience.png',
         'Poison': 'Icons/effects/Poison.png',
         'Dommage +': 'Icons/effects/Dommage +.png',
-        'Berserker': 'Icons/effects/Berserker.png',
         'Immunité Retard': 'Icons/effects/Immunité Retard.png',
         'Paralysie': 'Icons/effects/Paralysie.png',
         'Treshold': 'Icons/effects/Treshold.png',
@@ -291,17 +290,21 @@ document.addEventListener('DOMContentLoaded', () => {
         'RCV': 'Icons/effects/RCV.png',
         'SEMLA': 'Icons/effects/SEMLA.png',
         'Arc-en-ciel': 'Icons/effects/Arc-en-ciel.png',
-        'BLK': 'Icons/effects/BLK.png',
-        'EMP': 'Icons/effects/EMP.png',
+        'BLK': 'Icons/effects/BLK.png', 'BLOCK': 'Icons/effects/BLOCK.png',
+        'EMP': 'Icons/effects/EMP.png', 'EMPTY': 'Icons/effects/EMPTY.png',
         'Bomb': 'Icons/effects/Bomb.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
-        '': 'Icons/effects/.png',
+        'Despair': 'Icons/effects/Despair.png',
+        'SP Bind': 'Icons/effects/SP Bind.png',
+        'Silence': 'Icons/effects/Silence.png',
+        'Slot Bloqué': 'Icons/effects/Slot Bloqué.png',
+        'Territoire': 'Icons/effects/Territoire.png',
+        'Barriere': 'Icons/effects/Barriere.png',
+        'Treshold': 'Icons/effects/Treshold.png',
+        'Spe Bloqué': 'Icons/effects/Spe Bloqué.png',
+        'Limites': 'Icons/effects/Limites.png',
+        'Slot Lock': 'Icons/effects/Slot Lock.png',
+        'Actions Normal': 'Icons/effects/Actions Normal.png',
+        'Hunger': 'Icons/effects/Hunger.png',
     };
 
     function formatBossText(text) {
@@ -616,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- GESTION DES BATEAUX ---
         if (isShipSlot) {
             const filteredShips = allShips.filter(ship => {
-                return ship.Recherche.toLowerCase().includes(search);
+                return String(ship.id).includes(search) || ship.Recherche.toLowerCase().includes(search);
             });
 
             if (filteredShips.length === 0) {

@@ -403,4 +403,10 @@ const ships = [
     Recherche: "Jewelry Margherita",
     image: shipBaseUrl + "ship_067.png"
   },
+     {
+    id: 68,
+    name: "Great Erik",
+    Recherche: "Great Erik",
+    image: shipBaseUrl + "ship_068.png"
+  },
 ];
